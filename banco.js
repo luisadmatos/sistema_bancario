@@ -4,7 +4,6 @@
 //clientes - saque, deposito, transferencia, pix
 //extrato por cliente 
 
-// Função auxiliar para trabalhar com valores monetários precisos
 function roundMoney(value) {
     return Math.round(value * 100) / 100;
 }
@@ -34,7 +33,6 @@ class Cliente {
         this.addTransaction('depositar', valor);
     }
 
-    // Método interno para receber valores sem criar transação de depósito
     _receberValor(valor) {
         valor = roundMoney(valor);
         this.saldo = roundMoney(this.saldo + valor);
@@ -54,14 +52,14 @@ class Cliente {
         if (destino.conta === this.conta) {
             throw new Error("Não é possível transferir para si mesmo.");
         }
-        // Verifica saldo sem registrar transação de saque
+
         if (valor > this.saldo) {
             throw new Error("Saldo insuficiente.");
         }
-        // Atualiza saldo diretamente sem criar transação duplicada
+
         this.saldo = roundMoney(this.saldo - valor);
-        destino._receberValor(valor); // Usa método interno
-        // Registra apenas as transações de transferência
+        destino._receberValor(valor); 
+
         this.addTransaction('transferir', valor, { contaDestino: destino.conta });
         destino.addTransaction('transferir', valor, { contaOrigem: this.conta });
     }
@@ -71,20 +69,18 @@ class Cliente {
         if (destino.conta === this.conta) {
             throw new Error("Não é possível enviar PIX para si mesmo.");
         }
-        // Verifica saldo sem registrar transação de saque
+
         if (valor > this.saldo) {
             throw new Error("Saldo insuficiente.");
         }
-        // Atualiza saldo diretamente sem criar transação duplicada
+
         this.saldo = roundMoney(this.saldo - valor);
-        destino._receberValor(valor); // Usa método interno
-        // Registra apenas a transação do PIX
+        destino._receberValor(valor);
+
         this.addTransaction('pix-out', valor, { chaveDestino: destino.chavePix });
         destino.addTransaction('pix-in', valor, { chaveOrigem: this.chavePix });
     }
 }
-
-// Classe para gerenciar o banco
 class Banco {
     constructor() {
         this.clientes = [];
@@ -160,5 +156,4 @@ class Banco {
     }
 }
 
-// Instância global do banco
 const banco = new Banco();
