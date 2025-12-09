@@ -62,7 +62,7 @@ Sistema bancário web implementado em JavaScript usando Programação Orientada 
 ### 1. Abrir o sistema
 Abra o arquivo `index.html` no seu navegador web.
 
-### 2. Selecionar cliente
+### 2. Selecionar cliente ou Cadastre um novo
 Use o dropdown para selecionar um dos clientes pré-cadastrados:
 - Alice Silva (conta: 12345-6)
 - Bruno Costa (conta: 67890-1) 
