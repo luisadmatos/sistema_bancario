@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Banco JS</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Sistema Bancário</h1>
+        <p class="subtitle">Gerencie suas finanças com segurança e praticidade</p>
+    </header>
+
+    <main>
+        <!-- Seletor de Cliente -->
+        <div class="client-box">
+            <label>Selecione o Cliente:</label>
+            <select id="client-select"></select>
+
+            <div class="account-info">
+                <div class="info-card">
+                    <h3>Agência</h3>
+                    <div class="value" id="agency-display">----</div>
+                </div>
+                <div class="info-card">
+                    <h3>Saldo Disponível</h3>
+                    <div class="value" id="balance-display">R$ 0,00</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botões principais -->
+        <div class="actions-container">
+            <div class="actions">
+                <button onclick="showInput('deposit-input')">
+                    Depositar
+                </button>
+                <button onclick="showInput('withdraw-input')">
+                    Sacar
+                </button>
+                <button onclick="showInput('transfer-input')">
+                    Transferir
+                </button>
+                <button onclick="showInput('pix-input')">
+                    PIX
+                </button>
+                <button onclick="showInput('register-client-input')">
+                    Novo Cliente
+                </button>
+                <button onclick="historySection.classList.toggle('hidden')">
+                    Histórico
+                </button>
+            </div>
+        </div>
+
+        <!-- Formulários -->
+        <div class="forms-container">
+
+            <!-- Depósito -->
+            <div class="input-section" id="deposit-input">
+                <h3>Realizar Depósito</h3>
+                <input id="deposit-amount-input" placeholder="Digite o valor (ex: 1000,50)">
+                <button id="deposit-button">Confirmar Depósito</button>
+            </div>
+
+            <!-- Saque -->
+            <div class="input-section" id="withdraw-input">
+                <h3>Realizar Saque</h3>
+                <input id="withdraw-amount-input" placeholder="Digite o valor (ex: 500,00)">
+                <button id="withdraw-button">Confirmar Saque</button>
+            </div>
+
+            <!-- Transferência -->
+            <div class="input-section" id="transfer-input">
+                <h3>Realizar Transferência</h3>
+                <input id="transfer-target-account" placeholder="Conta de destino (ex: 00001-5)">
+                <input id="transfer-amount-input" placeholder="Valor a transferir (ex: 250,75)">
+                <button id="transfer-button">Confirmar Transferência</button>
+            </div>
+
+            <!-- PIX -->
+            <div class="input-section" id="pix-input">
+                <h3>⚡ Enviar PIX</h3>
+                <input id="pix-key-input" placeholder="Chave PIX (email, telefone, CPF)">
+                <input id="pix-amount-input" placeholder="Valor do PIX (ex: 150,00)">
+                <button id="pix-button">Enviar PIX</button>
+            </div>
+
+            <!-- Cadastrar Cliente -->
+            <div class="input-section" id="register-client-input">
+                <h3>Cadastrar Novo Cliente</h3>
+                <input id="client-name-input" placeholder="Nome completo do cliente">
+                <input id="client-agency-input" placeholder="Agência (ex: 0001)">
+                <input id="client-balance-input" placeholder="Saldo inicial (ex: 1000,00)">
+                <input id="client-pix-input" placeholder="Chave PIX (email, telefone, etc)">
+                <button id="register-client-button">Cadastrar Cliente</button>
+            </div>
+        </div>
+
+        <!-- Histórico -->
+        <div class="history-section hidden">
+            <h3>Histórico de Transações</h3>
+            <ul id="transaction-history"></ul>
+        </div>
+
+    </main>
+
+    <script src="banco.js"></script>
+    <script src="data.js"></script>
+    <script src="ui.js"></script>
+
+</body>
+</html>
