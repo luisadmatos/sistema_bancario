@@ -12,7 +12,6 @@
     </header>
 
     <main>
-        <!-- Seletor de Cliente -->
         <div class="client-box">
             <label>Selecione o Cliente:</label>
             <select id="client-select"></select>
@@ -29,7 +28,6 @@
             </div>
         </div>
 
-        <!-- Botões principais -->
         <div class="actions-container">
             <div class="actions">
                 <button onclick="showInput('deposit-input')">
@@ -53,24 +51,21 @@
             </div>
         </div>
 
-        <!-- Formulários -->
         <div class="forms-container">
 
-            <!-- Depósito -->
             <div class="input-section" id="deposit-input">
                 <h3>Realizar Depósito</h3>
                 <input id="deposit-amount-input" placeholder="Digite o valor (ex: 1000,50)">
                 <button id="deposit-button">Confirmar Depósito</button>
             </div>
 
-            <!-- Saque -->
             <div class="input-section" id="withdraw-input">
                 <h3>Realizar Saque</h3>
                 <input id="withdraw-amount-input" placeholder="Digite o valor (ex: 500,00)">
                 <button id="withdraw-button">Confirmar Saque</button>
             </div>
 
-            <!-- Transferência -->
+
             <div class="input-section" id="transfer-input">
                 <h3>Realizar Transferência</h3>
                 <input id="transfer-target-account" placeholder="Conta de destino (ex: 00001-5)">
@@ -78,7 +73,6 @@
                 <button id="transfer-button">Confirmar Transferência</button>
             </div>
 
-            <!-- PIX -->
             <div class="input-section" id="pix-input">
                 <h3>⚡ Enviar PIX</h3>
                 <input id="pix-key-input" placeholder="Chave PIX (email, telefone, CPF)">
@@ -86,7 +80,6 @@
                 <button id="pix-button">Enviar PIX</button>
             </div>
 
-            <!-- Cadastrar Cliente -->
             <div class="input-section" id="register-client-input">
                 <h3>Cadastrar Novo Cliente</h3>
                 <input id="client-name-input" placeholder="Nome completo do cliente">
@@ -97,7 +90,6 @@
             </div>
         </div>
 
-        <!-- Histórico -->
         <div class="history-section hidden">
             <h3>Histórico de Transações</h3>
             <ul id="transaction-history"></ul>

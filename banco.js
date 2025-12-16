@@ -18,7 +18,7 @@ class Cliente {
         this.transacoes = [];
     }
 
-    addTransaction(tipo, valor, detalhes = {}) {
+    addTransicao(tipo, valor, detalhes = {}) {
         this.transacoes.unshift({
             tipo,
             valor,
@@ -30,7 +30,7 @@ class Cliente {
     depositar(valor) {
         valor = roundMoney(valor);
         this.saldo = roundMoney(this.saldo + valor);
-        this.addTransaction('depositar', valor);
+        this.addTransicao('depositar', valor);
     }
 
     _receberValor(valor) {
@@ -44,7 +44,7 @@ class Cliente {
             throw new Error("Saldo insuficiente.");
         }
         this.saldo = roundMoney(this.saldo - valor);
-        this.addTransaction('sacar', valor);
+        this.addTransicao('sacar', valor);
     }
 
     transferir(destino, valor) {
@@ -60,8 +60,8 @@ class Cliente {
         this.saldo = roundMoney(this.saldo - valor);
         destino._receberValor(valor); 
 
-        this.addTransaction('transferir', valor, { contaDestino: destino.conta });
-        destino.addTransaction('transferir', valor, { contaOrigem: this.conta });
+        this.addTransicao('transferir', valor, { contaDestino: destino.conta });
+        destino.addTransicao('transferir', valor, { contaOrigem: this.conta });
     }
 
     pix(destino, valor) {
@@ -77,8 +77,8 @@ class Cliente {
         this.saldo = roundMoney(this.saldo - valor);
         destino._receberValor(valor);
 
-        this.addTransaction('pix-out', valor, { chaveDestino: destino.chavePix });
-        destino.addTransaction('pix-in', valor, { chaveOrigem: this.chavePix });
+        this.addTransicao('pix-out', valor, { chaveDestino: destino.chavePix });
+        destino.addTransicao('pix-in', valor, { chaveOrigem: this.chavePix });
     }
 }
 class Banco {
@@ -106,7 +106,6 @@ class Banco {
 
     // Cadastra novo cliente
     cadastrarCliente(nome, agencia, saldoInicial, chavePix) {
-        // Validações
         if (!nome || nome.trim().length < 2) {
             throw new Error("Nome deve ter pelo menos 2 caracteres");
         }
@@ -140,17 +139,14 @@ class Banco {
         return novoCliente;
     }
 
-    // Busca cliente por conta
     buscarPorConta(conta) {
         return this.clientes.find(c => c.conta === conta);
     }
 
-    // Busca cliente por PIX
     buscarPorPix(chavePix) {
         return this.clientes.find(c => c.chavePix === chavePix);
     }
 
-    // Lista todos os clientes
     listarClientes() {
         return this.clientes;
     }
