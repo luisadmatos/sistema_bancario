@@ -1,12 +1,10 @@
 let currentClient = null;
 
-// Utilidades
 function formatCurrency(value) {
     return `R$ ${value.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
 }
 
 function parseMoneyInput(input) {
-    // Remove espaços e substitui vírgula por ponto
     const cleaned = input.replace(/\s/g, '').replace(',', '.');
     const value = parseFloat(cleaned);
     return isNaN(value) ? 0 : value;
@@ -16,7 +14,6 @@ function showMessage(msg) {
     alert(msg);
 }
 
-// DOM refs
 const clientSelect = document.getElementById('client-select');
 const agencyDisplay = document.getElementById('agency-display');
 const balanceDisplay = document.getElementById('balance-display');
@@ -24,7 +21,6 @@ const historyList = document.getElementById('transaction-history');
 const historySection = document.querySelector('.history-section');
 const inputSections = document.querySelectorAll('.input-section');
 
-// Updates
 function updateAccountInfo() {
     agencyDisplay.textContent = currentClient.agencia;
     balanceDisplay.textContent = formatCurrency(currentClient.saldo);
@@ -75,19 +71,16 @@ function selectClient(acc) {
     }
 }
 
-// Mostrar inputs
 function showInput(id) {
     inputSections.forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
     historySection.classList.add('hidden');
 }
 
-// Eventos
 clientSelect.addEventListener('change', e => {
     selectClient(e.target.value);
 });
 
-// Depósito
 document.getElementById('deposit-button').addEventListener('click', () => {
     const amount = parseMoneyInput(document.getElementById('deposit-amount-input').value);
     if (amount <= 0) return showMessage("Valor inválido");
@@ -96,7 +89,6 @@ document.getElementById('deposit-button').addEventListener('click', () => {
     showMessage("Depósito realizado!");
 });
 
-// Saque
 document.getElementById('withdraw-button').addEventListener('click', () => {
     try {
         const amount = parseMoneyInput(document.getElementById('withdraw-amount-input').value);
@@ -109,7 +101,6 @@ document.getElementById('withdraw-button').addEventListener('click', () => {
     }
 });
 
-// Transferência
 document.getElementById('transfer-button').addEventListener('click', () => {
     try {
         const amount = parseMoneyInput(document.getElementById('transfer-amount-input').value);
@@ -124,7 +115,6 @@ document.getElementById('transfer-button').addEventListener('click', () => {
     }
 });
 
-// PIX
 document.getElementById('pix-button').addEventListener('click', () => {
     try {
         const amount = parseMoneyInput(document.getElementById('pix-amount-input').value);
@@ -139,7 +129,6 @@ document.getElementById('pix-button').addEventListener('click', () => {
     }
 });
 
-// Cadastrar Cliente
 document.getElementById('register-client-button').addEventListener('click', () => {
     try {
         const nome = document.getElementById('client-name-input').value.trim();
@@ -153,24 +142,20 @@ document.getElementById('register-client-button').addEventListener('click', () =
         
         const novoCliente = banco.cadastrarCliente(nome, agencia, saldo, chavePix);
         
-        // Atualiza o dropdown com o novo cliente
         const option = document.createElement('option');
         option.value = novoCliente.conta;
         option.textContent = `${novoCliente.nome} (${novoCliente.conta})`;
         clientSelect.appendChild(option);
         
-        // Seleciona o novo cliente
         currentClient = novoCliente;
         clientSelect.value = currentClient.conta;
         updateAccountInfo();
         
-        // Limpa os campos
         document.getElementById('client-name-input').value = '';
         document.getElementById('client-agency-input').value = '';
         document.getElementById('client-balance-input').value = '';
         document.getElementById('client-pix-input').value = '';
-        
-        // Esconde o formulário
+
         document.querySelectorAll('.input-section').forEach(s => s.classList.remove('active'));
         
         showMessage(`Cliente ${nome} cadastrado com sucesso!\nConta: ${novoCliente.conta}`);
@@ -180,12 +165,9 @@ document.getElementById('register-client-button').addEventListener('click', () =
     }
 });
 
-// Inicialização
 function atualizarDropdownClientes() {
-    // Limpa o dropdown
     clientSelect.innerHTML = '';
     
-    // Adiciona todos os clientes
     banco.listarClientes().forEach(c => {
         const option = document.createElement('option');
         option.value = c.conta;
@@ -194,7 +176,7 @@ function atualizarDropdownClientes() {
     });
 }
 
-// Inicializa a aplicação
+
 atualizarDropdownClientes();
 
 if (banco.listarClientes().length > 0) {
